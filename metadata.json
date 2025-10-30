@@ -1,0 +1,7 @@
+{
+  "name": "Call Analysis Conversational Agent",
+  "description": "An AI-powered conversational agent that analyzes call transcriptions based on predefined criteria using real-time voice interaction.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
