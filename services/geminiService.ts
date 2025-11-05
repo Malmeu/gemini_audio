@@ -174,7 +174,6 @@ Gabarit à respecter (remplace tous les [crochets] par le contenu détecté et n
   <style>
     @media print {
       body { background: white !important; }
-      .no-print { display: none !important; }
       .wrap { max-width: 100% !important; padding: 20px !important; }
       .card { border: none !important; box-shadow: none !important; }
     }
@@ -191,28 +190,6 @@ Gabarit à respecter (remplace tous les [crochets] par le contenu détecté et n
       font:15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Arial;
     }
     .wrap{max-width:1100px;margin:0 auto;padding:32px 20px}
-    .header-actions{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:24px;
-    }
-    .btn-export{
-      background:var(--accent);
-      color:white;
-      border:none;
-      padding:10px 20px;
-      border-radius:8px;
-      font-weight:600;
-      cursor:pointer;
-      transition:all 0.2s;
-      font-size:14px;
-    }
-    .btn-export:hover{
-      background:#3d7ae8;
-      transform:translateY(-1px);
-      box-shadow:0 4px 12px rgba(79,140,255,0.3);
-    }
     .card{
       background:var(--panel);
       border:1px solid rgba(255,255,255,.08);
@@ -385,28 +362,9 @@ Gabarit à respecter (remplace tous les [crochets] par le contenu détecté et n
       font-weight:500;
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <script>
-    function exportToPDF() {
-      const element = document.querySelector('.card');
-      const opt = {
-        margin: 10,
-        filename: 'rapport_analyse_appel_' + new Date().toISOString().slice(0,10) + '.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-      html2pdf().set(opt).from(element).save();
-    }
-  </script>
 </head>
 <body>
   <div class="wrap">
-    <div class="header-actions no-print">
-      <div></div>
-      <button class="btn-export" onclick="exportToPDF()">📥 Exporter en PDF</button>
-    </div>
-    
     <div class="card">
       <h1>🧾 RAPPORT SUPERVISEUR – ÉVALUATION D'APPEL</h1>
 

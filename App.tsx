@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import html2pdf from 'html2pdf.js';
 import { startTranscriptionSession, transcribeAudioFile, analyzeTranscription, exportTranscriptionToTxt, copyTranscriptionToClipboard, exportAnalysisToTxt, copyAnalysisToClipboard } from './services/geminiService';
 import { MicrophoneIcon, StopIcon, ExclamationTriangleIcon, UploadIcon, SpinnerIcon, DocumentDownloadIcon, ClipboardIcon, CloudArrowUpIcon } from './components/Icons';
 import Header from './components/Header';
@@ -233,6 +234,47 @@ const App: React.FC = () => {
       showCopySuccess('Analyse copiée dans le presse-papiers !');
     } else {
       setError('Erreur lors de la copie de l\'analyse.');
+    }
+  };
+
+  const handleExportAnalysisPDF = async () => {
+    if (!currentAnalysis) return;
+    
+    try {
+      // Créer un élément temporaire pour contenir le HTML
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = currentAnalysis;
+      document.body.appendChild(tempDiv);
+      tempDiv.style.position = 'absolute';
+      tempDiv.style.left = '-9999px';
+      tempDiv.style.width = '1100px';
+      
+      // Attendre que le DOM soit prêt
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      const opt = {
+        margin: 10,
+        filename: `rapport_analyse_appel_${new Date().toISOString().slice(0,10)}.pdf`,
+        image: { type: 'jpeg' as const, quality: 0.98 },
+        html2canvas: { 
+          scale: 2, 
+          useCORS: true, 
+          letterRendering: true,
+          backgroundColor: '#0b0f19',
+          logging: false
+        },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' as const }
+      };
+      
+      const element = tempDiv.querySelector('.card') as HTMLElement || tempDiv;
+      await html2pdf().set(opt).from(element).save();
+      
+      // Nettoyer
+      document.body.removeChild(tempDiv);
+      showCopySuccess('PDF exporté avec succès !');
+    } catch (error) {
+      console.error('Erreur lors de l\'export PDF:', error);
+      setError('Erreur lors de l\'export du PDF.');
     }
   };
 
@@ -517,6 +559,16 @@ const App: React.FC = () => {
                         title="Exporter l'analyse en TXT"
                       >
                         <DocumentDownloadIcon className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={handleExportAnalysisPDF}
+                        className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md transition-colors"
+                        title="Exporter l'analyse en PDF"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6" />
+                        </svg>
                       </button>
                       <button
                         onClick={handleSaveAnalysis}
