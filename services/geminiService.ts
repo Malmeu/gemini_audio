@@ -201,10 +201,7 @@ Gabarit à respecter (remplace tous les [crochets] par le contenu détecté et n
       font-size:28px;
       margin:0 0 24px;
       font-weight:700;
-      background:linear-gradient(135deg, var(--accent), #6366f1);
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      background-clip:text;
+      color:var(--accent);
     }
     h2{
       font-size:20px;
@@ -251,15 +248,16 @@ Gabarit à respecter (remplace tous les [crochets] par le contenu détecté et n
     }
     .score-badge{
       display:inline-block;
-      padding:6px 14px;
-      border-radius:20px;
+      padding:4px 12px;
+      border-radius:12px;
       font-weight:700;
-      font-size:16px;
+      font-size:15px;
+      border:2px solid;
     }
-    .score-excellent{background:var(--excellent);color:#000}
-    .score-bon{background:var(--bon);color:#fff}
-    .score-moyen{background:var(--warn);color:#000}
-    .score-faible{background:var(--bad);color:#fff}
+    .score-excellent{background:rgba(34,197,94,0.2);color:#22c55e;border-color:#22c55e}
+    .score-bon{background:rgba(59,130,246,0.2);color:#3b82f6;border-color:#3b82f6}
+    .score-moyen{background:rgba(245,158,11,0.2);color:#f59e0b;border-color:#f59e0b}
+    .score-faible{background:rgba(239,68,68,0.2);color:#ef4444;border-color:#ef4444}
     
     /* Tableau amélioré */
     .table-container{
@@ -274,7 +272,7 @@ Gabarit à respecter (remplace tous les [crochets] par le contenu détecté et n
       background:#0f1530;
     }
     thead tr{
-      background:linear-gradient(135deg, #1a2332, #0a1124);
+      background:#0a1124;
     }
     th{
       padding:14px 16px;
@@ -333,15 +331,16 @@ Gabarit à respecter (remplace tous les [crochets] par le contenu détecté et n
     
     .confidence-badge{
       display:inline-block;
-      padding:4px 10px;
-      border-radius:12px;
-      font-size:12px;
+      padding:3px 8px;
+      border-radius:8px;
+      font-size:11px;
       font-weight:600;
-      margin-left:8px;
+      margin-left:6px;
+      border:1px solid;
     }
-    .conf-eleve{background:var(--ok);color:#000}
-    .conf-moyen{background:var(--warn);color:#000}
-    .conf-faible{background:var(--bad);color:#fff}
+    .conf-eleve{background:rgba(34,197,94,0.2);color:#22c55e;border-color:#22c55e}
+    .conf-moyen{background:rgba(245,158,11,0.2);color:#f59e0b;border-color:#f59e0b}
+    .conf-faible{background:rgba(239,68,68,0.2);color:#ef4444;border-color:#ef4444}
     
     .script-box{
       background:#0a0f1a;
@@ -354,7 +353,7 @@ Gabarit à respecter (remplace tous les [crochets] par le contenu détecté et n
     }
     
     .verdict-box{
-      background:linear-gradient(135deg, rgba(79,140,255,0.1), rgba(99,102,241,0.1));
+      background:rgba(79,140,255,0.1);
       border:2px solid rgba(79,140,255,0.3);
       border-radius:12px;
       padding:20px;
