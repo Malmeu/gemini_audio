@@ -248,16 +248,14 @@ Gabarit à respecter (remplace tous les [crochets] par le contenu détecté et n
     }
     .score-badge{
       display:inline-block;
-      padding:4px 12px;
-      border-radius:12px;
+      padding:0 4px;
       font-weight:700;
-      font-size:15px;
-      border:2px solid;
+      font-size:16px;
     }
-    .score-excellent{background:rgba(34,197,94,0.2);color:#22c55e;border-color:#22c55e}
-    .score-bon{background:rgba(59,130,246,0.2);color:#3b82f6;border-color:#3b82f6}
-    .score-moyen{background:rgba(245,158,11,0.2);color:#f59e0b;border-color:#f59e0b}
-    .score-faible{background:rgba(239,68,68,0.2);color:#ef4444;border-color:#ef4444}
+    .score-excellent{color:#22c55e}
+    .score-bon{color:#3b82f6}
+    .score-moyen{color:#f59e0b}
+    .score-faible{color:#ef4444}
     
     /* Tableau amélioré */
     .table-container{
@@ -331,16 +329,14 @@ Gabarit à respecter (remplace tous les [crochets] par le contenu détecté et n
     
     .confidence-badge{
       display:inline-block;
-      padding:3px 8px;
-      border-radius:8px;
-      font-size:11px;
+      padding:0 4px;
+      font-size:12px;
       font-weight:600;
       margin-left:6px;
-      border:1px solid;
     }
-    .conf-eleve{background:rgba(34,197,94,0.2);color:#22c55e;border-color:#22c55e}
-    .conf-moyen{background:rgba(245,158,11,0.2);color:#f59e0b;border-color:#f59e0b}
-    .conf-faible{background:rgba(239,68,68,0.2);color:#ef4444;border-color:#ef4444}
+    .conf-eleve{color:#22c55e}
+    .conf-moyen{color:#f59e0b}
+    .conf-faible{color:#ef4444}
     
     .script-box{
       background:#0a0f1a;
