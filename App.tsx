@@ -237,6 +237,24 @@ const App: React.FC = () => {
     }
   };
 
+  const extractBodyContent = (htmlString: string): string => {
+    // Extraire uniquement le contenu entre <body> et </body>
+    const bodyMatch = htmlString.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+    if (bodyMatch) {
+      return bodyMatch[1];
+    }
+    return htmlString;
+  };
+
+  const extractStyleContent = (htmlString: string): string => {
+    // Extraire le contenu CSS entre <style> et </style>
+    const styleMatch = htmlString.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
+    if (styleMatch) {
+      return styleMatch[1];
+    }
+    return '';
+  };
+
   const handleExportAnalysisPDF = async () => {
     if (!currentAnalysis) return;
     
@@ -646,8 +664,9 @@ const App: React.FC = () => {
 
               {showAnalysis && currentAnalysis && (
                 <div className="bg-gray-700 rounded-lg p-4 overflow-y-auto max-h-96">
+                  <style dangerouslySetInnerHTML={{ __html: extractStyleContent(currentAnalysis) }} />
                   <div className="prose prose-invert max-w-none">
-                    <div dangerouslySetInnerHTML={{ __html: currentAnalysis.replace(/\n/g, '<br />') }} />
+                    <div dangerouslySetInnerHTML={{ __html: extractBodyContent(currentAnalysis) }} />
                   </div>
                 </div>
               )}
