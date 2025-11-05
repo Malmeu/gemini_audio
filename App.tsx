@@ -342,18 +342,49 @@ const App: React.FC = () => {
     setError(null);
 
     try {
-      const title = `Session du ${new Date().toLocaleDateString('fr-FR')} à ${new Date().toLocaleTimeString('fr-FR')}`;
-      const combinedContent = `TRANSCRIPTION:\n${fullTranscription}\n\nANALYSE:\n${currentAnalysis}`;
+      const title = `Rapport d'analyse - ${new Date().toLocaleDateString('fr-FR')} à ${new Date().toLocaleTimeString('fr-FR')}`;
       
-      const { saveTranscriptionToTable: saveFunc } = await import('./services/newSupabaseService');
-      await saveFunc(
-        selectedTable,
+      // Extraire les métadonnées du HTML
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = currentAnalysis;
+      
+      // Extraire les informations des chips
+      const chips = tempDiv.querySelectorAll('.chip');
+      let agentName = 'Non déterminé';
+      let prospectName = 'Non déterminé';
+      let projet = 'Projet indéterminé';
+      let secteur = 'Non déterminé';
+      let score = 0;
+      let evaluation = 'Inévaluable';
+      
+      chips.forEach(chip => {
+        const text = chip.textContent || '';
+        if (text.includes('Agent:')) agentName = text.replace('Agent:', '').trim();
+        if (text.includes('Prospect:')) prospectName = text.replace('Prospect:', '').trim();
+        if (text.includes('Projet:')) projet = text.replace('Projet:', '').trim();
+        if (text.includes('Secteur:')) secteur = text.replace('Secteur:', '').trim();
+        if (text.includes('Score:')) {
+          const scoreMatch = text.match(/(\d+)\/100/);
+          if (scoreMatch) score = parseInt(scoreMatch[1]);
+        }
+        if (text.includes('Évaluation:')) evaluation = text.replace('Évaluation:', '').trim();
+      });
+      
+      const { saveRapportAnalyse } = await import('./services/newSupabaseService');
+      await saveRapportAnalyse({
+        source_table: selectedTable,
         title,
-        customName,
-        combinedContent
-      );
+        nom: customName,
+        rapport_html: currentAnalysis,
+        agent_name: agentName,
+        prospect_name: prospectName,
+        projet,
+        secteur,
+        score,
+        evaluation
+      });
       
-      showCopySuccess(`Session sauvegardée dans ${getTableDisplayName(selectedTable)} !`);
+      showCopySuccess(`Rapport sauvegardé dans la base de données !`);
       setShowSaveForm(false);
       setCustomName('');
     } catch (err) {

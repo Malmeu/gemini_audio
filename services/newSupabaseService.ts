@@ -37,6 +37,24 @@ export interface RecordData {
     updated_at?: string;
 }
 
+export interface RapportAnalyseData {
+    id?: string;
+    source_table: TableName;
+    source_id?: string;
+    title: string;
+    nom: string;
+    rapport_html: string;
+    agent_name?: string;
+    prospect_name?: string;
+    projet?: string;
+    secteur?: string;
+    score?: number;
+    evaluation?: string;
+    is_validated?: boolean;
+    created_at?: string;
+    updated_at?: string;
+}
+
 // Fonction générique pour sauvegarder dans n'importe quelle table
 export const saveRecord = async (tableName: TableName, recordData: Omit<RecordData, 'id' | 'created_at' | 'updated_at'>) => {
     if (!supabase) {
@@ -131,4 +149,60 @@ export const saveTranscriptionToTable = async (
         nom,
         transcriptions
     });
+};
+
+// Fonction pour sauvegarder un rapport d'analyse
+export const saveRapportAnalyse = async (
+    rapportData: Omit<RapportAnalyseData, 'id' | 'created_at' | 'updated_at'>
+) => {
+    if (!supabase) {
+        throw new Error('Client Supabase non initialisé. Veuillez vérifier votre configuration.');
+    }
+
+    try {
+        const { data, error } = await supabase
+            .from('rapports_analyse')
+            .insert([rapportData])
+            .select();
+
+        if (error) {
+            console.error('❌ Erreur lors de la sauvegarde du rapport:', error);
+            throw error;
+        }
+
+        return data?.[0];
+    } catch (error) {
+        console.error('❌ Erreur inattendue lors de la sauvegarde du rapport:', error);
+        throw error;
+    }
+};
+
+// Fonction pour récupérer les rapports d'analyse
+export const getRapportsAnalyse = async (sourceTable?: TableName) => {
+    if (!supabase) {
+        throw new Error('Client Supabase non initialisé. Veuillez vérifier votre configuration.');
+    }
+
+    try {
+        let query = supabase
+            .from('rapports_analyse')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (sourceTable) {
+            query = query.eq('source_table', sourceTable);
+        }
+
+        const { data, error } = await query;
+
+        if (error) {
+            console.error('Erreur lors de la récupération des rapports:', error);
+            throw error;
+        }
+
+        return data || [];
+    } catch (error) {
+        console.error('Erreur inattendue lors de la récupération des rapports:', error);
+        throw error;
+    }
 };
