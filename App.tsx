@@ -543,45 +543,57 @@ const App: React.FC = () => {
             <div className="bg-gray-800 rounded-lg p-6">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-semibold text-sky-400">Analyse Commerciale</h2>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3">
                   {showAnalysis && currentAnalysis && (
                     <>
-                      <button
-                        onClick={handleCopyAnalysis}
-                        className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md transition-colors"
-                        title="Copier l'analyse"
-                      >
-                        <ClipboardIcon className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={handleExportAnalysis}
-                        className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md transition-colors"
-                        title="Exporter l'analyse en TXT"
-                      >
-                        <DocumentDownloadIcon className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={handleExportAnalysisPDF}
-                        className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md transition-colors"
-                        title="Exporter l'analyse en PDF"
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6" />
-                        </svg>
-                      </button>
-                      <button
-                        onClick={handleSaveAnalysis}
-                        disabled={isSaving}
-                        className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                        title="Sauvegarder la session complète dans Supabase"
-                      >
-                        {isSaving ? (
-                          <SpinnerIcon className="w-4 h-4" />
-                        ) : (
-                          <CloudArrowUpIcon className="w-4 h-4" />
-                        )}
-                      </button>
+                      <div className="flex flex-col items-center">
+                        <button
+                          onClick={handleCopyAnalysis}
+                          className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md transition-colors"
+                          title="Copier l'analyse"
+                        >
+                          <ClipboardIcon className="w-4 h-4" />
+                        </button>
+                        <span className="text-xs text-gray-400 mt-1">Copier</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <button
+                          onClick={handleExportAnalysis}
+                          className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md transition-colors"
+                          title="Exporter l'analyse en TXT"
+                        >
+                          <DocumentDownloadIcon className="w-4 h-4" />
+                        </button>
+                        <span className="text-xs text-gray-400 mt-1">TXT</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <button
+                          onClick={handleExportAnalysisPDF}
+                          className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md transition-colors"
+                          title="Exporter l'analyse en PDF"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6" />
+                          </svg>
+                        </button>
+                        <span className="text-xs text-gray-400 mt-1">PDF</span>
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <button
+                          onClick={handleSaveAnalysis}
+                          disabled={isSaving}
+                          className="p-2 text-gray-300 hover:text-white hover:bg-gray-700 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          title="Sauvegarder la session complète dans Supabase"
+                        >
+                          {isSaving ? (
+                            <SpinnerIcon className="w-4 h-4" />
+                          ) : (
+                            <CloudArrowUpIcon className="w-4 h-4" />
+                          )}
+                        </button>
+                        <span className="text-xs text-gray-400 mt-1">Cloud</span>
+                      </div>
                     </>
                   )}
                   <button
